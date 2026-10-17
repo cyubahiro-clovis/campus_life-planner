@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1580" viewBox="0 0 1280 1580" font-family="Arial, sans-serif" font-size="13">
+  <title>Desktop wireframe (1024px and up)</title>
+  <rect width="1280" height="1580" fill="#fafafa"/>
+
+  <!-- header: site name left, nav right (one row from 1024px) -->
+  <rect x="0" y="0" width="1280" height="80" fill="#d6d6d6"/>
+  <text x="72" y="36" font-weight="bold" font-size="20">Campus Life Planner</text>
+  <text x="72" y="58" fill="#555">Classes, labs, deadlines and club nights in one place.</text>
+  <g fill="#fff" stroke="#888">
+    <rect x="760" y="26" width="96" height="28" rx="14"/><rect x="864" y="26" width="64" height="28" rx="14"/>
+    <rect x="936" y="26" width="84" height="28" rx="14"/><rect x="1028" y="26" width="80" height="28" rx="14"/>
+    <rect x="1116" y="26" width="68" height="28" rx="14"/>
+  </g>
+  <text x="774" y="45">Dashboard</text><text x="878" y="45">Tasks</text><text x="950" y="45">Add task</text>
+  <text x="1042" y="45">Settings</text><text x="1130" y="45">About</text>
+
+  <!-- dashboard -->
+  <rect x="72" y="104" width="1136" height="330" rx="14" fill="#fff" stroke="#bbb"/>
+  <text x="96" y="136" font-size="18" font-weight="bold">Dashboard</text>
+  <g fill="#f0f0f0" stroke="#ccc">
+    <rect x="96" y="152" width="352" height="70" rx="10"/>
+    <rect x="464" y="152" width="352" height="70" rx="10"/>
+    <rect x="832" y="152" width="352" height="70" rx="10"/>
+  </g>
+  <text x="112" y="176" fill="#555">Total tasks</text><text x="112" y="206" font-size="22" font-weight="bold">16</text>
+  <text x="480" y="176" fill="#555">Total time</text><text x="480" y="206" font-size="22" font-weight="bold">3052.75 min</text>
+  <text x="848" y="176" fill="#555">Top tag</text><text x="848" y="206" font-size="22" font-weight="bold">Study</text>
+  <text x="930" y="206" fill="#555">3 tasks</text>
+
+  <rect x="96" y="238" width="720" height="180" rx="10" fill="#f7f7f7" stroke="#ccc"/>
+  <text x="112" y="262" font-weight="bold">Last 7 days (bars made of divs, they grow in)</text>
+  <text x="112" y="282" fill="#555" font-size="12">230 min was due in the last 7 days. Busiest day: 2026-10-12 (90 min).</text>
+  <g fill="#9e9e9e">
+    <rect x="140" y="384" width="56" height="2"/><rect x="232" y="378" width="56" height="8"/>
+    <rect x="324" y="300" width="56" height="86"/><rect x="416" y="344" width="56" height="42"/>
+    <rect x="508" y="330" width="56" height="56"/><rect x="600" y="358" width="56" height="28"/>
+    <rect x="692" y="384" width="56" height="2"/>
+  </g>
+  <line x1="112" y1="387" x2="800" y2="387" stroke="#888"/>
+  <g fill="#555" text-anchor="middle">
+    <text x="168" y="406">10-10</text><text x="260" y="406">10-11</text><text x="352" y="406">10-12</text>
+    <text x="444" y="406">10-13</text><text x="536" y="406">10-14</text><text x="628" y="406">10-15</text>
+    <text x="720" y="406" font-weight="bold">Today</text>
+  </g>
+
+  <rect x="832" y="238" width="352" height="180" rx="10" fill="#f7f7f7" stroke="#ccc"/>
+  <text x="848" y="262" font-weight="bold">Time cap</text>
+  <text x="848" y="284" fill="#555" font-size="12">Cap in hours</text>
+  <rect x="848" y="292" width="220" height="32" rx="6" fill="#fff" stroke="#888"/>
+  <rect x="1076" y="292" width="92" height="32" rx="6" fill="#bdbdbd"/><text x="1094" y="313">Set cap</text>
+  <rect x="848" y="338" width="320" height="10" rx="5" fill="#e0e0e0"/><rect x="848" y="338" width="240" height="10" rx="5" fill="#9e9e9e"/>
+  <text x="848" y="372" fill="#555">polite live message: "600 min left of your 2400 min cap"</text>
+  <text x="848" y="394" fill="#c62828">switches to assertive once you go over</text>
+
+  <!-- tasks table -->
+  <rect x="72" y="454" width="1136" height="500" rx="14" fill="#fff" stroke="#bbb"/>
+  <text x="96" y="486" font-size="18" font-weight="bold">Tasks</text>
+  <text x="96" y="510" fill="#555">Search with a regex</text>
+  <rect x="96" y="518" width="560" height="34" rx="6" fill="#fff" stroke="#888"/>
+  <text x="108" y="540" fill="#999">lab|exam or @tag:study</text>
+  <rect x="96" y="560" width="14" height="14" fill="#fff" stroke="#888"/><text x="116" y="572">Ignore case</text>
+  <text x="944" y="510" fill="#555">Sort by</text>
+  <rect x="944" y="518" width="240" height="34" rx="6" fill="#fff" stroke="#888"/>
+  <text x="956" y="540">Due date, soonest first ▾</text>
+  <text x="96" y="596" fill="#555" font-size="12">Try @tag:study · \b\d{2}:\d{2}\b for times · ^(lab|lecture)</text>
+  <text x="96" y="614" fill="#555" font-size="12">[role=status] Found 2 of 16 tasks.</text>
+
+  <rect x="96" y="624" width="1088" height="32" fill="#eee"/>
+  <text x="108" y="645" font-weight="bold">TITLE</text><text x="640" y="645" font-weight="bold">DUE DATE</text>
+  <text x="780" y="645" font-weight="bold">DURATION</text><text x="920" y="645" font-weight="bold">TAG</text>
+  <g stroke="#ddd">
+    <line x1="96" y1="696" x2="1184" y2="696"/><line x1="96" y1="736" x2="1184" y2="736"/>
+    <line x1="96" y1="896" x2="1184" y2="896"/><line x1="96" y1="936" x2="1184" y2="936"/>
+  </g>
+  <text x="108" y="680">CHEM practical <tspan font-weight="bold" text-decoration="underline">lab</tspan> report 14:30</text>
+  <text x="640" y="680">2026-10-16</text><text x="780" y="680">90 min</text><text x="920" y="680">Lab</text>
+  <text x="300" y="680" fill="#777" font-size="11">  (matches wrapped in &lt;mark&gt;)</text>
+  <rect x="1060" y="664" width="50" height="24" rx="6" fill="#fff" stroke="#888"/><text x="1072" y="681">Edit</text>
+  <rect x="1118" y="664" width="58" height="24" rx="6" fill="#fff" stroke="#888"/><text x="1126" y="681">Delete</text>
+  <text x="108" y="720">Lab write-up: "Titration" results</text>
+  <text x="640" y="720">2026-10-09</text><text x="780" y="720">52.5 min</text><text x="920" y="720">Lab</text>
+  <rect x="1060" y="704" width="50" height="24" rx="6" fill="#fff" stroke="#888"/><text x="1072" y="721">Edit</text>
+  <rect x="1118" y="704" width="58" height="24" rx="6" fill="#fff" stroke="#888"/><text x="1126" y="721">Delete</text>
+
+  <rect x="100" y="744" width="1080" height="144" rx="8" fill="#f5f5f5" stroke="#888" stroke-dasharray="4 3"/>
+  <text x="112" y="766" font-weight="bold">Inline edit row (one cell spans all five columns)</text>
+  <text x="112" y="790" fill="#555" font-size="12">Title</text><text x="384" y="790" fill="#555" font-size="12">Due date</text>
+  <text x="656" y="790" fill="#555" font-size="12">Duration (minutes)</text><text x="928" y="790" fill="#555" font-size="12">Tag</text>
+  <g fill="#fff" stroke="#888">
+    <rect x="112" y="796" width="256" height="30" rx="6"/><rect x="384" y="796" width="256" height="30" rx="6"/>
+    <rect x="656" y="796" width="256" height="30" rx="6"/>
+  </g>
+  <rect x="928" y="796" width="240" height="30" rx="6" fill="#fff" stroke="#c62828" stroke-width="2"/>
+  <text x="928" y="842" fill="#c62828" font-size="11">error under the field, aria-invalid="true"</text>
+  <rect x="112" y="852" width="60" height="26" rx="6" fill="#9e9e9e"/><text x="126" y="869" fill="#fff">Save</text>
+  <rect x="180" y="852" width="66" height="26" rx="6" fill="#fff" stroke="#888"/><text x="192" y="869">Cancel</text>
+  <text x="262" y="869" fill="#555">Enter saves · Esc cancels</text>
+  <text x="108" y="920" fill="#999">...more rows</text>
+
+  <!-- add form: all four fields in one row -->
+  <rect x="72" y="974" width="1136" height="166" rx="14" fill="#fff" stroke="#bbb"/>
+  <text x="96" y="1006" font-size="18" font-weight="bold">Add a task</text>
+  <text x="96" y="1030" fill="#555">Title</text><text x="372" y="1030" fill="#555">Due date</text>
+  <text x="648" y="1030" fill="#555">Duration (minutes)</text><text x="924" y="1030" fill="#555">Tag</text>
+  <g fill="#fff" stroke="#888">
+    <rect x="96" y="1036" width="260" height="32" rx="6"/><rect x="372" y="1036" width="260" height="32" rx="6"/>
+    <rect x="648" y="1036" width="260" height="32" rx="6"/><rect x="924" y="1036" width="260" height="32" rx="6"/>
+  </g>
+  <text x="384" y="1057" fill="#999">YYYY-MM-DD</text>
+  <text x="96" y="1086" fill="#555" font-size="11">hint under each field</text>
+  <rect x="96" y="1098" width="100" height="30" rx="6" fill="#9e9e9e"/><text x="116" y="1118" fill="#fff">Add task</text>
+
+  <!-- settings: two cards -->
+  <rect x="72" y="1160" width="1136" height="170" rx="14" fill="#fff" stroke="#bbb"/>
+  <text x="96" y="1192" font-size="18" font-weight="bold">Settings</text>
+  <rect x="96" y="1208" width="536" height="106" rx="10" fill="#f7f7f7" stroke="#ccc"/>
+  <text x="112" y="1232" font-weight="bold">Units</text>
+  <text x="112" y="1256">Show durations in: ( ) Minutes ( ) Hours</text>
+  <text x="112" y="1286">Converter: Minutes</text>
+  <rect x="236" y="1272" width="110" height="24" rx="5" fill="#fff" stroke="#888"/>
+  <text x="356" y="1289">⇄ Hours</text>
+  <rect x="412" y="1272" width="110" height="24" rx="5" fill="#fff" stroke="#888"/>
+  <rect x="648" y="1208" width="536" height="106" rx="10" fill="#f7f7f7" stroke="#ccc"/>
+  <text x="664" y="1232" font-weight="bold">Your data</text>
+  <rect x="664" y="1244" width="100" height="26" rx="6" fill="#fff" stroke="#888"/><text x="676" y="1262">Export JSON</text>
+  <rect x="772" y="1244" width="134" height="26" rx="6" fill="#fff" stroke="#888"/><text x="784" y="1262">Load sample tasks</text>
+  <text x="664" y="1292">Import a JSON file [Choose file]</text>
+  <rect x="1040" y="1278" width="128" height="26" rx="6" fill="#fff" stroke="#c62828"/><text x="1050" y="1296" fill="#c62828">Delete all tasks</text>
+
+  <!-- about: three columns -->
+  <rect x="72" y="1350" width="1136" height="150" rx="14" fill="#fff" stroke="#bbb"/>
+  <text x="96" y="1382" font-size="18" font-weight="bold">About</text>
+  <text x="96" y="1406" font-weight="bold">Why I made this (article)</text>
+  <rect x="96" y="1416" width="520" height="8" fill="#e0e0e0"/><rect x="96" y="1432" width="480" height="8" fill="#e0e0e0"/>
+  <rect x="96" y="1448" width="500" height="8" fill="#e0e0e0"/>
+  <rect x="652" y="1394" width="260" height="90" rx="10" fill="#f7f7f7" stroke="#ccc"/>
+  <text x="668" y="1418" font-weight="bold">Contact</text>
+  <text x="668" y="1442">GitHub · Email</text>
+  <rect x="924" y="1394" width="260" height="90" rx="10" fill="#f7f7f7" stroke="#ccc"/>
+  <text x="940" y="1418" font-weight="bold">Keyboard</text>
+  <text x="940" y="1442">Tab · Enter · Esc</text>
+
+  <rect x="0" y="1520" width="1280" height="60" fill="#d6d6d6"/>
+  <text x="480" y="1555" fill="#555">Footer: © 2026 Cyubahiro Clovis · Run the tests · jQuery scraper · Source</text>
+</svg>
