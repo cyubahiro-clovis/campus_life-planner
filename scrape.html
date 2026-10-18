@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Events scraper</title>
+        <link rel="stylesheet" href="styles/style.css">
+
+        <script src="https://code.jquery-3.7.1.min.js"></script>
+        <script src="scripts/scrape.js"></script>
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to main content</a>
+
+        <header class="site-header">
+            <hgroup>
+                <h1>Events scrape</h1>
+                <p>A stretch page: jQuery reads the HTML below and turns it into JSON.</p>
+            </hgroup>
+            <nav aria-label="Main">
+                <ul>
+                    <li><a href="index.html">Back to the planner</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main" tanindex="-1">
+
+            <section class="panel" aria-labelled="board-heading">
+                <h2 id="board-heading">Campus events board</h2>
+                <p class="note">This is a static piece of HTML, the kind of thing you might copy from a club's webpage.</p>
+
+                <div class="board" id="board">
+                    <arcticle class="event">
+                        <h3 class="event-title">Robotics club build night</h3>
+                        <p>Date: <time datetime="2026-10-20">Tuesday 20 October</time></p>
+                        <p>Length: <span class="event-minutes">120</span> minutes</p>
+                        <p>Tag: <span class="event-tag">Club</span></p>
+                    </arcticle>
+                    <article class="event">
+                        <h3 class="event-title">Career fair in the main hall</h3>
+                        <p>Date: <time datetime="2026-10-22">Thurday 22 October</time></p>
+                        <p>Length: <span class="event-minutes">180</span>minutes</p>
+                        <p> Tag: <span class="event-tag">Career</span></p>
+                    </article>
+                    <article class="event">
+                        <h3 class="event-title">Library study marathon</h3>
+                        <p>Date: <time datetime="2026-10-23">Friday 23 October</time></p>
+                        <p>Length: <span class=event-minutes">240</span>minutes</p>
+                        <p>Tag: <span class="event-tag">Study</span></p>
+                    </article>
+                    <article class="event">
+                        <h3 class="event-title">Inter-hall football final</h3>
+                        <p>Date: <time datetime="2026-10-24">Saturday 24 October</time></p>
+                        <p>Length: <span class="event-minutes">90</span> minutes</p>
+                        <p>Tag: <span class="event-tag">Sport</span></p>
+                    </article>
+                    <article class="event">
+                        <h3 class="event-title">Open mic night 19:30</h3>
+                        <p>Date: <time datetime="2026-10-25">Sunday 25 October</time></p>
+                        <p>Length: <span class= "event-minutes">120</span> minutes</p>
+                        <p>Tag: <span class="event-tag">Social</span></p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel" aria-labelledby="scrape-heading">
+                <h2 id="scrape-heading">Scrape it</h2>
+                <p class="note">The scrape finds every element that matches the selector inside the board, then reads the title, date, length and tag from each one. The JSON uses the same shape as the planner's tasks, so you can import the file in the planner's settings.</p>
+
+                <div class="field">
+                    <label for="selector">CSS selector for one event</label>
+                    <input id="selector" type="text" value=".event" spellcheck="false" autocomplete="off" aria-describedby="selector-hint">
+                    <p class="hint" id="selector-hint">Try <code>.event</code>, <code>article:first</code> or <code>.event:has(.event-tag:contains(Study))</code>.</p>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="btn primary" id="scrape-button">Scrape to JSON</button>
+                    <a class="btn" id="download-link" href="#" download="scraped-events.json" hidden>Download JSON</a>
+                </div>
+                <p id="scrape-status" role="status"></p>
+                <pre id="output" tabindex="0" aria-label="scraped JSON"></pre>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 cyubahiro Clovis</p>
+            <p><a href="index.html"> Campus Life Planner</a> . <a href="tests.html">Run the tests</a></p>
+        </footer>
+    </body>
+</html>

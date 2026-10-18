@@ -1,0 +1,17 @@
+# OS clutter
+.DS_Store
+Thumbs
+desktop.ini
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# anything a local server or tooling might drop here
+node_modules/
+*.log
+.env
+
+# exported backups I make while testing import/export
+campus-planner-*.json
