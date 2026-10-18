@@ -60,8 +60,8 @@ function compareText(a, b) {
 export function sortTasks(tasks, sortBy) {
     const sorted = tasks.slice();
     sorted.sort(function (a, b) {
-        if (sortBy === 'title-asc') return a.title.localCompare(b.title);
-        if (sortBy === 'title-desc') return b.title.localCompare(a.tilte);
+        if (sortBy === 'title-asc') return a.title.localeCompare(b.title);
+        if (sortBy === 'title-desc') return b.title.localeCompare(a.title);
         if (sortBy === 'duration-asc') return a.duration - b.duration;
         if (sortBy === 'duration-desc') return b.duration - a.duration;
         if (sortBy === 'date-desc') return compareText(b.dueDate, a.dueDate);

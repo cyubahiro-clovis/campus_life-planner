@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="'UTF-8">
-        <meta name="viewport" content="width=device-width, intial-scale=1.0">
-        <meta name="description" content=" A campus Life Planner: tasks, deadlines and events with regex.Everything stays in your browser.">
-        <title>Campus Lifa Planner</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content=" A campus Life Planner: tasks, deadlines and events with regex. Everything stays in your browser.">
+        <title>Campus Life Planner</title>
         <link rel="stylesheet" href="styles/style.css">
         <script type="module" src="scripts/main.js"></script>
     </head>
@@ -20,8 +20,9 @@
             <nav aria-label="Main">
                 <ul>
                     <li><a href="#dashboard">Dashboard</a></li>
-                    <li><a href="#task">Tasks</a></li>
-                    <li><a href="#setting">Settings</a></li>
+                    <li><a href="#tasks">Tasks</a></li>
+                    <li><a href="#settings">Settings</a></li>
+                    <li><a href="#add-task">Add task</a></li>
                     <li><a href="#about">About</a></li>
                 </ul>
             </nav>
@@ -51,8 +52,8 @@
                 <div class="dashboard-row">
                     <div class="card chart-card">
                         <h3>Last 7 days</h3>
-                        <p class="notes" id="chart-summary">Nothing was due in the last 7 days.</p>
-                        <div class7="chart" id="chart" aria-hidden="true"></div>
+                        <p class="note" id="chart-summary">Nothing was due in the last 7 days.</p>
+                        <div class="chart" id="chart" aria-hidden="true"></div>
                     </div>
 
                     <div class="card cap-card" id="cap-card">
@@ -67,6 +68,7 @@
                             <p class="error" id="cap-input-error" aria-live="polite"></p>
                         </form>
                         <div class="meter"><div class="meter-bar" id="cap-bar"></div></div>
+                        <p id="cap-message" aria-live="polite">No cap set yet.</p>
                     </div>
                 </div>
             </section>
@@ -118,9 +120,9 @@
                 <form id="task-form" class="task-form" novalidate>
                     <div class="field">
                         <label for="title">Title</label>
-                        <input id="title" name="title" type="text" maxlength="80" autocomplete="off" required aria-descriedby="title-hint title-error">
+                        <input id="title" name="title" type="text" maxlength="80" autocomplete="off" required aria-describedby="title-hint title-error">
                         <p class="hint" id="title-hint">For example: CHEM lab report 14:30</p>
-                        <p class="errors" id="title-error" aria-live="polite"></p>
+                        <p class="error" id="title-error" aria-live="polite"></p>
                     </div>
                     <div class="field">
                         <label for="due-date">Due date</label>
@@ -136,11 +138,11 @@
                     </div>
                     <div class="field">
                         <label for="tag">Tag</label>
-                        <input id="tsg" name="tag" type="text" maxlength="30" autocomplete="off" required ari-describedby="tag-hint tag-error">
+                        <input id="tag" name="tag" type="text" maxlength="30" autocomplete="off" required aria-describedby="tag-hint tag-error">
                         <p class="hint" id="tag-hint">Letters, spaces or hyphens: Study, Club, Self-care.</p>
                         <p class="error" id="tag-error" aria-live="polite"></p>
                     </div>
-                    <div class="button form-buttons">
+                    <div class="buttons form-buttons">
                         <button type="submit" class="btn primary">Add task</button>
                     </div>
                 </form>
@@ -150,11 +152,11 @@
                 <h2 id="settings-heading">Settings</h2>
 
                 <div class="settings-row">
-                    <div class="cards">
+                    <div class="card">
                         <h3>Units</h3>
                         <fieldset>
                             <legend>Show durations in</legend>
-                            <label class="check"><input type="radio" name="unit" value="min" checked> MInutes (90 min)</label>
+                            <label class="check"><input type="radio" name="unit" value="min" checked> Minutes (90 min)</label>
                             <label class="check"><input type="radio" name="unit" value="h"> Hours (1.5 h)</label>
                         </fieldset>
 
@@ -176,14 +178,16 @@
 
                     <div class="card">
                         <h3>Your data</h3>
-                        <p class="note">Tasks save automatically in this browser.Export a backup beforeyou clear your browser data.</p>
+                        <p class="note">Tasks save automatically in this browser. Export a backup before you clear your browser data.</p>
                         <div class="buttons">
-                            <a class="btn" id="export" href="#" download="campus-planner-tasks.json">Export JSON</a>
+                            <a class="btn" id="export-link" href="#" download="campus-planner-tasks.json">Export JSON</a>
                             <button type="button" class="btn" id="load-sample">Load sample tasks</button>
                         </div>
                         <div class="field">
                             <label for="import-file">Import a JSON file (it replaces your tasks)</label>
                             <input id="import-file" type="file" accept=".json,application/json">
+                            <div class="import-status" id="import" aria-live="polite"></div>
+                            <button type="button" class="btn danger" id="delete-all">Delete all tasks</button>
                         </div>
                     </div>
                 </div>
@@ -195,15 +199,15 @@
                     <article>
                         <h3>Why I made this</h3>
                         <p>My week was split between a calendar app, group chats and sticky notes. I wanted one place that shows what's due, how much time I've signed up for, and when I'm taking on too much.</p>
-                        <p>It's plain HTML, CSS, and Javascript with no frameworks. Your tasks are saved in this browser with localStorage, so there's no account and nothingis sentanywhere.</p>
+                        <p>It's plain HTML, CSS, and Javascript with no frameworks. Your tasks are saved in this browser with localStorage, so there's no account and nothing is sent anywhere.</p>
                     </article>
 
-                    <div class="cards>">
+                    <div class="card>">
                         <h3>Contact</h3>
                         <address>
                           <ul class="plain-list">
                             <li>Github: <a href="https://github.com/cyubahiro-clovis">My github</a></li>
-                            <li>Email: <a href="mailto:m.clovis@alustudent.com>My email"></a></li>
+                            <li>Email: <a href="mailto:m.clovis@alustudent.com">My email></a></li>
                           </ul>
                         </address>
                     </div>

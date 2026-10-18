@@ -4,7 +4,7 @@
 import { rules, checkTitle, checkDate, checkDuration, checkTag, validateImport } from '../scripts/validators.js';
 import { compileRegex, buildSearch, filterTasks, sortTasks, escapeHTML, highlight } from '../scripts/search.js';
 
-const results = document.getElementById('result');
+const results = document.getElementById('results');
 let list = null;
 let passed = 0;
 let failed = 0;
@@ -22,8 +22,12 @@ function check(description, actual, expected) {
     const item = document.createElement('li');
     if (actual === expected) {
         passed++;
+        item.className = 'pass';
+        item.textContent = 'PASS: ' + description;
+    } else {
+        failed++;
         item.className = 'fail';
-        item.textContent = 'FAIL: ${description} (expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)})';
+        item.textContent = `FAIL: ${description} (expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)})`;
     }
     list.appendChild(item);
 }
@@ -35,9 +39,9 @@ group('Title');
 check('a normal title passes', checkTitle('CHEM 201 lab report'), fine);
 check('a title with a time passes', checkTitle('Study group 14:30'), fine);
 check('an empty title fails', checkTitle('') !== fine, true);
-check('a space at the start fails', checkTitle('lab report') !== fine, true);
-check('a space at the end fails', checkTitle('lab report') !== fine, true);
-check('two spaces in a row fail', checkTitle('lab report') !== fine, true);
+check('a space at the start fails', checkTitle(' lab report ') !== fine, true);
+check('a space at the end fails', checkTitle(' lab report ') !== fine, true);
+check('two spaces in a row fail', checkTitle(' lab report ') !== fine, true);
 check('lookahead: "1234" has no letter, so it fails', checkTitle('1234') !== fine, true);
 check('back-reference: "the the" fails', checkTitle('Read the the notes') !== fine, true);
 check('back-reference ignore case: "The the" fails', checkTitle('The the end') !== fine, true);
@@ -83,7 +87,7 @@ function idsOf(found) {
 }
 
 function searchFor(text, ignoreCase, keepId) {
-    return idsOf(filterTasks(tasks, buildSearch(text, ignoreCase, keepId)));
+    filterTasks(tasks, buildSearch(text, ignoreCase, keepId));
 }
 
 group('Regex search');
@@ -100,29 +104,28 @@ check('the date is searched too', searchFor('-20$', true, null), 'c');
 check('the task being edited stays in the list', searchFor('zzz', true, 'c'), 'c');
 
 group('Highlighting');
-check('every match is wrapped in <mark>', highligh('Lab lab', /lab/gi),'<mark>Lab</mark> <mark>lab</mark>');
+check('every match is wrapped in <mark>', highlight('Lab lab', /lab/gi),'<mark>Lab</mark> <mark>lab</mark>');
 check('HTML in a title is escaped', highlight('Read <Ch. 5> & notes', null), 'Read &lt;Ch. 5&gt; &amp; notes');
-check('searching for "t" does not break "&lt;"', highlights('<t>', /t/g), '&lt;<mark>t</mark>&gt;');
+check('searching for "t" does not break "&lt;"', highlight('<t>', /t/g), '&lt;<mark>t</mark>&gt;');
 check('a pattern that only matches empty text marks nothing', highlight('abc', /x*/g), 'abc');
 check('quotes are escaped', escapeHTML('say "hi"'), 'say &quot;hi&quot;');
 
 group('Sorting');
 check('due date, soonest first', idsOf(sortTasks(tasks, 'date-asc')), 'b,a,c');
-check('due date, lastestfirst', idsOf(sortTasks(tasks, date-desc)), 'c,a,b');
+check('due date, lastestfirst', idsOf(sortTasks(tasks, 'date-desc')), 'c,a,b');
 check('title, A to Z', idsOf(sortTasks(tasks, 'title-asc')), 'c,a,b');
 check('title, Z to A', idsOf(sortTasks(tasks, 'title-desc')), 'b,a,c');
 check('duration, shortest first', idsOf(sortTasks(tasks, 'duration-asc')), 'c,b,a');
 check('duration, longest first', idsOf(sortTasks(tasks, 'duration-desc')), 'a,b,c');
 check('sorting leaves the original list alone', idsOf(tasks), 'a,b,c');
-check('sorting leaving the original list alone', idsOf(tasks), 'a,b,c');
- 'fail'
+
 const good = {
     id: 'task_0001',
     title: 'peer learning circle 16:00',
     dueDate: '2026-10-12',
     duration: 90,
     tag: 'Study',
-    createAt: '2026-10-05T07:42:10.000Z',
+    createdAt: '2026-10-05T07:42:10.000Z',
     updatedAt: '2026-10-05T07:42:10.000Z',
 };
 

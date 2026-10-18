@@ -1,6 +1,6 @@
 // Saving to and loading from localStorage, based on the starter code in the brief.
 
-import { checkTask } from './validator.js';
+import { checkTask } from './validators.js';
 
 const TASKS_KEY = 'campus-planner:tasks';
 const SETTINGS_KEY = 'campus-planner:settings';
@@ -30,11 +30,11 @@ export function saveTasks(tasks) {
     try {
         localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
     } catch (error) {
-        console.warn('The tasks could not be saved. The browser storage may be fullor blocked.');
+        console.warn('The tasks could not be saved. The browser storage may be full or blocked.');
     }
 }
 
-export function loadSetting() {
+export function loadSettings() {
     let saved = {};
     try {
         saved = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
@@ -48,7 +48,7 @@ export function loadSetting() {
     };
 }
 
-export function saveSetting(settings) {
+export function saveSettings(settings) {
     try {
         localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
     } catch (error) {

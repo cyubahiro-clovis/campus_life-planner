@@ -1,9 +1,9 @@
 // The tasks and settings the app is working with. Every change goes through
 // these functions, so it is saved to localStorage straight away.
-import { loadTasks, saveTasks, loadSettings, saveSettings } from '.storage.js';
+import { loadTasks, saveTasks, loadSettings, saveSettings } from './storage.js';
 
 let tasks = loadTasks();
-const settings = loadSetting();
+const settings = loadSettings();
 
 export function getTasks() {
     return tasks;
@@ -33,11 +33,11 @@ export function addTask(data) {
     const task = {
         id: nextId(),
         title: data.title,
-        dueDate: Date.dueDate,
+        dueDate: data.dueDate,
         duration: data.duration,
         tag: data.tag,
         createdAt: now,
-        updateedAt: now,
+        updatedAt: now,
     };
     tasks.push(task);
     saveTasks(tasks);
@@ -109,7 +109,7 @@ export function getStats() {
 
         let minutes = 0;
         tasks.forEach(function (task) {
-            if (task.Duedate === date) minutes += task.duration;
+            if (task.duedate === date) minutes += task.duration;
         });
         lastSevenDays.push({ date: date, minutes: minutes });
     }
@@ -118,7 +118,7 @@ export function getStats() {
         count: tasks.length,
         totalMinutes: totalMinutes,
         topTag: topTag, 
-        topTapCount: tagCounts[toptag] || 0,
+        topTapCount: tagCounts[topTag] || 0,
         lastSevenDays: lastSevenDays, 
     };
 }

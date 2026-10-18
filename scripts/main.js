@@ -1,11 +1,11 @@
 import { hasSavedTasks } from './storage.js';
 import{
-    getTasks, getSettingd, findTask, addTask, updateTask, deleteTask, replaceTasks, setSetting, getStats,
+    getTasks, getSettings, findTask, addTask, updateTask, deleteTask, replaceTasks, setSetting, getStats,
 } from './state.js';
-import { rules, validationImport } from '.validators.js';
-import { buildsearch, filterTasks, sortTasks, escapeHTML } from './search.js';
+import { rules, validateImport } from './validators.js';
+import { buildSearch, filterTasks, sortTasks, escapeHTML } from './search.js';
 import { 
-    rendersTasks, renderSearchStatus, renderDashboard, checkInput, checkform, readForm, showError, announce, plural,
+    renderTasks, renderSearchStatus, renderDashboard, checkInput, checkForm, readForm, showError, announce, plural,
 } from './ui.js';
 
 const taskForm = document.getElementById('task-form');
@@ -17,7 +17,7 @@ const sortSelect = document.getElementById( 'sort');
 
 let editingId = null;
 
-function showTask() {
+function showTasks() {
     const search = buildSearch(searchInput.value, ignoreCase.checked);
     const shown = sortTasks(filterTasks(getTasks(), search, editingId), sortSelect.value);
     renderTasks(shown, search, editingId, getSettings().unit, getTasks().length);
@@ -31,7 +31,10 @@ function refresh() {
 
 function watchFields(area) {
     area.addEventListener('focusout', function (event) {
-        if (event.target.getattribute('aria-invalid') === 'ture') checkInput(event.target);
+        if (event.target.value) checkInput(event.target);
+    });
+    area.addEventListener('input', function(event){
+        if (event.target.getAttribute('aria-invalid') === 'true') checkInput(event.target);
     });
 }
 
@@ -61,14 +64,14 @@ function focusRowButton(id, action) {
 
 function startEdit(id) {
     editingId = id;
-    showTask();
+    showTasks();
     document.getElementById('edit-title').focus();
 }
 
 function cancelEdit() {
     const id = editingId;
     editingId = null;
-    showTask();
+    showTasks();
     focusRowButton(id, 'edit');
 }
 
@@ -118,7 +121,7 @@ taskRows.addEventListener('click', function (event){
 });
 
 taskRows.addEventListener('submit', function (event) {
-    event.presentDefault();
+    event.preventDefault();
     saveEdit();
 });
 
@@ -133,7 +136,7 @@ sortSelect.addEventListener('change', showTasks);
 document.getElementById('cap-form').addEventListener('submit', function (event){
     if (input.value === '') {
         showError(input, '')
-        setSetting('capminutes', null)
+        setSetting('capMinutes', null)
     } else if (!rules.duration.test(input.value) || Number(input.value) === 0) {
         showError(input, 'Enter a number of hours bigger than 0, like 40 or 12.5');
         input.focus();
@@ -143,7 +146,7 @@ document.getElementById('cap-form').addEventListener('submit', function (event){
         setSetting('capMinutes', Number(input.value) * 60);
     }
 
-    renderDashboard(getSats(), getSettings());
+    renderDashboard(getStats(), getSettings());
 });
 
 document.querySelectorAll('input[name="unit"]').forEach(function (radio){
@@ -154,8 +157,8 @@ document.querySelectorAll('input[name="unit"]').forEach(function (radio){
 })
 
 const minutesBox = document.getElementById('convert-minutes');
-const hoursBox = document.getElementById('convert-hour');
-const convetResult = document.getElementById('convert-result');
+const hoursBox = document.getElementById('convert-hours');
+const convertResult = document.getElementById('convert-result');
 
 function convert(from, to, multiplyBy, fromName, toName) {
     if (from.value === '') {
@@ -166,12 +169,12 @@ function convert(from, to, multiplyBy, fromName, toName) {
         convertResult.textContent = 'Use a number like 90 or 1.5.';
     }else {
          to.value = Math.round(Number(from.value) * multiplyBy * 100) /100;
-         convertResult.textContent = '${from.value} ${fromName} = $(to.value) $(toName)';
+         convertResult.textContent = '${from.value} ${fromName} = ${to.value} ${toName}';
     }
 }
 
 minutesBox.addEventListener('input', function () {
-    convert(minutesBox, hoursBox, 1 /60, 'minutes', 'hour');
+    convert(minutesBox, hoursBox, 1 /60, 'minutes', 'hours');
 });
 
 hoursBox.addEventListener('input', function () {
@@ -185,12 +188,12 @@ function setImportStatus(html, isError) {
     box.classList.toggle('is-error', isError);
 }
 
-function showImportProblem(problems) {
+function showImportProblems(problems) {
     let html = '<strong>Nothing was Imported.</strong> Fix these and try again:<ul>';
     problems.slice(0, 5).forEach(function (problem) {
-        html += '<li>' + escapeHTML(problem) + '<li>';
+        html += '</li>' + escapeHTML(problem) + '</li>';
     });
-    if (problems.length > 5) html += '<li>...and ${problems.length -5} more<li>';
+    if (problems.length > 5) html += '</li>...and ${problems.length -5} more</li>';
     setImportStatus(html + '</ul>', true);
 }
 
@@ -206,8 +209,8 @@ exportLink.addEventListener('click', function (event) {
     announce(`Exported ${plural(tasks.length, 'task')}.`);
 });
 
-const importLink = document.getElementById('export-link');
-importantInput.addEventlistener('change', function () {
+const importInput = document.getElementById('import-file');
+importInput.addEventlistener('change', function () {
     const file = importInput.files[0];
     if (!file) return;
 
@@ -217,7 +220,7 @@ importantInput.addEventlistener('change', function () {
         try {
             data =JSON.parse(reader.result);
         }catch (error) {
-            setImportStatus("<strong>Nothing was imperted.</strong> That file isn't valid JSON.", true);
+            setImportStatus("<strong>Nothing was imported.</strong> That file isn't valid JSON.", true);
             return;
         }
 
@@ -252,7 +255,7 @@ function loadSample(firstVisit) {
 
     const xhr =new XMLHttpRequest();
     xhr.open('GET', 'seed.json');
-    xhr.onload = function () {y
+    xhr.onload = function () {
         let data = null;
         try {
             data =JSON.parse(xhr.responseText);
@@ -263,6 +266,8 @@ function loadSample(firstVisit) {
             announce("The sample tasks couldn't be loaded.")
             return;
         }
+
+        refresh();
 
         editingId = null;
         replaceTasks(data);
@@ -295,7 +300,7 @@ document.getElementById('delete-all').addEventListener('click', function () {
 
 document.querySelector('input[name="unit"][value="${getSettings().unit}"]').checked = true;
 if (getSettings().capMinutes !== null) {
-    document.getElementById('cap-input').value = Math.round((getsettings().capMinutes / 60) * 100) / 100;
+    document.getElementById('cap-input').value = Math.round((getSettings().capMinutes / 60) * 100) / 100;
 }
 
 refresh();

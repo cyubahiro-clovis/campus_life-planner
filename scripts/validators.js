@@ -32,14 +32,14 @@ export function checkDate(value) {
 }
 
 export function checkDuration(value) {
-    if (value === '') return 'Please eneter a due date.';
+    if (value === '') return 'Please enter how many minutes it takes.';
     if (!rules.duration.test (value)) return 'Use a number like 45 or 52.5, with no leading zero and at most 2 decimals.';
     return '';
 }
 
 export function checkTag(value) {
     if (value === '') return 'Please enter a tag, like Study or Club.';
-    if (!rules.tag.test(value)) return ' Use letters only, with single spaces or hyphens between words.';
+    if (!rules.tag.test(value)) return 'Use letters only, with single spaces or hyphens between words.';
     return '';
 }
 
@@ -50,7 +50,7 @@ export function checkTask(task) {
 
     const problems = [];
     if (typeof task.id !== 'string' || !rules.id.test(task.id)) {
-        problems.push('the is must use only letters, numbers, _ or -');
+        problems.push('the id must use only letters, numbers, _ or -');
     }
 
     const titleError = typeof task.title === 'string' ? checkTitle(task.title) : 'it is missing';
@@ -59,11 +59,14 @@ export function checkTask(task) {
     const dateError = typeof task.dueDate === 'string' ? checkDate(task.dueDate) : 'it is missing';
     if (dateError) problems.push('dueDate: ' + dateError);
 
-    const tagError = typeof task.tag === 'string' ? checkTag(task.tag) : ' it is missing';
+    const tagError = typeof task.tag === 'string' ? checkTag(task.tag) : 'it is missing';
     if (tagError) problems.push('tag: ' + tagError);
 
     if (typeof task.duration !== 'number' || checkDuration(String(task.duration)) !== '') {
-        problems.push('createdAt or updatedAt is missing');
+        problems.push('duration must be a number of minutes, like 45');
+    }
+    if (typeof task.createdAt !== 'string' || typeof task.updatedAt !== 'string') {
+        problems.push('createedAt or updatedAt is missing');
     }
     return problems;
 }

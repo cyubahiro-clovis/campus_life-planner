@@ -6,7 +6,7 @@ body {
     margin: 0;
     background: #f6f3ea;
     color:#1c2420;
-    font-family: system-ui, "sergoe UI", Roboto, Arial, sans-serif;
+    font-family: system-ui, "Sergoe UI", Roboto, Arial, sans-serif;
     line-height: 1.5;
 }
 
@@ -225,11 +225,22 @@ fieldset {
     font-weight: normal;
 }
 
-.checkinput {
+.check input {
     width: 1.1rem;
     height: 1.1rem;
     margin: 0;
     accent-color: #1f5a44;
+}
+
+
+.inline {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.inline > .field {
+    flex: 1;
+    min-width: 0;
 }
 
 .inline > input {
@@ -282,7 +293,7 @@ input[type="file"]::file-selector-button {
     background: #174634;
 }
 
-.btn.danger:hover {
+.btn.danger {
     border-color: #a3302a;
     color: #a3302a;
 }
@@ -327,12 +338,16 @@ input[type="file"]::file-selector-button {
 
 .stat-value {
     margin: 0;
-    font-family: Georgia, "Times New Romans", serif;
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 1.3rem;
     font-weight: bold;
     overflow-wrap: anywhere;
 }
 
+.chart {
+    display:flex;
+    gap: 0.25rem;
+}
 .stat-note {
     margin: 0;
     color: #55605a;
@@ -447,7 +462,17 @@ search {
 .search-status {
     margin: 0.5rem 0 1rem;
     color: #55605a;
+    font-size: 0.9rem;
+}
+
+.search-status.is-error {
+    color:#a3302a;
     font-weight: 600;
+}
+
+.task-task {
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .task-table thead {
@@ -472,6 +497,12 @@ search {
 .task-table tbody th {
     font-size: 1.05rem;
     overflow-wrap: anywhere;
+}
+
+.task-table td[data-label]::before {
+    content: attr(data-label) ": ";
+    color: #55605a;
+    font-weight: 600;
 }
 
 .task-table .actions {
@@ -579,9 +610,16 @@ address {
     margin: 0.25rem 0;
 }
 
+@keyframes grow {
+    from {
+        tranform: scaleY(0);
+    }
+}
+
 @keyframes fade-in {
     from {
-        opacity: translateY(0.5rem);
+        opacity: 0;
+        transform: translateY(0.5rem);
     }
 }
 
@@ -610,7 +648,7 @@ address {
     border-radius: 10px;
 }
 
-.vent p {
+.event p {
     margin: 0;
 }
 
@@ -666,7 +704,7 @@ pre:empty {
     }
 
     .dashboard-row .card,
-    .setting-row .card {
+    .settings-row .card {
         flex: 1;
     }
 
@@ -743,7 +781,7 @@ pre:empty {
         white-space: nowrap;
     }
 
-    .task-table .actons {
+    .task-table .actions {
         text-align: right;
         white-space: nowrap;
     }

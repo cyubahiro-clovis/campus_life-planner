@@ -4,9 +4,9 @@ A planner for campus life. It keeps track of classes, labs, deadlines and club n
 
 **Theme:** Campus Life Planner (tasks, durations, tags, search)
 
-- **Live site:** https://cyubahiro-clovis.github.io/campus-life-planner/
-- **Tests:** https://cyubahiro-clovis.github.io/campus-life-planner/tests.html
-- **jQuery scraper (stretch):** https://cyubahiro-clovis.github.io/campus-life-planner/scrape.html
+- **Live site:** https://cyubahiro-clovis.github.io/campus_life-planner/
+- **Tests:** https://cyubahiro-clovis.github.io/campus_life-planner/tests.html
+- **jQuery scraper (stretch):** https://cyubahiro-clovis.github.io/campus_life-planner/scrape.html
 - **Demo video (unlisted):** _add link here_
 
 ## Contents
@@ -71,7 +71,6 @@ index.html         the planner
 tests.html         runs the assertions in tests/tests.js
 scrape.html        stretch page: jQuery events scraper
 seed.json          16 sample tasks
-assets/            favicon
 styles/style.css   all the styles, mobile first
 scripts/
   main.js          starts the app and connects the forms and buttons to the other modules
@@ -82,7 +81,6 @@ scripts/
   ui.js            draws the table, the dashboard, field errors and the status message
   scrape.js        the jQuery code for scrape.html
 tests/tests.js     the assertions
-docs/
   spec.md          M1 spec: data model, accessibility plan, breakpoints
   wireframes/      mobile and desktop wireframes
 ```
@@ -205,7 +203,7 @@ Mobile first: the CSS at the top of `style.css` is the phone layout, and three `
 
 ## Running the tests
 
-Open `tests.html` through Live Server (or on the live site). It runs 63 small assertions and lists each one as PASS or FAIL, in these groups:
+Open `tests.html` through Live Server (or on the live site). It runs 62 small assertions and lists each one as PASS or FAIL, in these groups:
 
 - the title, date, duration and tag rules, including the lookahead and back-reference cases
 - the safe regex compiler (a broken pattern gives `null`, not an error)
@@ -234,8 +232,6 @@ Some things to try by hand in the app:
 - If it passes, the app asks before replacing your tasks. Extra fields in the file are dropped.
 - Saved data is checked when the app starts too. If localStorage holds broken JSON, the list starts empty instead of crashing, and any record that isn't a proper task is skipped.
 
-`seed.json` has 16 tasks picked to cover edge cases:
-- a leap day (2024-02-29), New Year's Eve and New Year's Day
 - durations of 0, 5 and 1440 minutes, and decimals (52.5 and 120.25)
 - titles with `<`, `&`, quotes, accents and times like 08:30
 - a two-word tag (`Group Project`)
@@ -255,17 +251,17 @@ jQuery is loaded from `code.jquery.com`, on this page only.
 
 ## Deploying to GitHub Pages
 
-1. Push the repo to GitHub (`cyubahiro-clovis/campus-life-planner`).
+1. Push the repo to GitHub (`cyubahiro-clovis/campus_life-planner`).
 2. In the repo, go to **Settings → Pages**, set **Source** to "Deploy from a branch", pick **main** and **/ (root)**, then save.
-3. After a minute or so the site is live at https://cyubahiro-clovis.github.io/campus-life-planner/
+3. After a minute or so the site is live at https://cyubahiro-clovis.github.io/campus_life-planner/
 
-All the paths are relative (`styles/…`, `scripts/…`, `seed.json`), so it works from the `/campus-life-planner/` sub-path as it is.
+All the paths are relative (`styles/…`, `scripts/…`, `seed.json`), so it works from the `/campus_life-planner/` sub-path as it is.
 
 ## Milestones
 
 | Milestone | What went in |
 |-----------|--------------|
-| M1 | spec, data model, accessibility plan, wireframes (`docs/`) |
+| M1 | spec, data model, accessibility plan, wireframes  |
 | M2 | semantic HTML for every section, mobile-first CSS |
 | M3 | regex validation with inline errors, `tests.html` |
 | M4 | table and cards, sorting, regex search with `<mark>`, inline edit, delete |
