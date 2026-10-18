@@ -54,11 +54,11 @@ taskForm.addEventListener('submit', function (event) {
     taskForm.reset();
     refresh();
     taskForm.elements.title.focus();
-    announce('Added "${task.title}".');
+    announce(`Added "${task.title}".`);
 });
 
 function focusRowButton(id, action) {
-    const button = taskRows.querySelector('tr[data-id="${id}"} button[data-action="${action}"]');
+    const button = taskRows.querySelector(`tr[data-id="${id}"]} button[data-action="${action}"]`);
     if (button) button.focus();
 }
 
@@ -88,7 +88,7 @@ function saveEdit(id) {
     editingId = null;
     refresh();
     focusRowButton(task.id, 'edit');
-    announce('Saved changes to "${task.title}".');
+    announce(`Saved changes to "${task.title}".`);
 }
 
 function removeTask(id) {
@@ -102,7 +102,7 @@ function removeTask(id) {
 
     deleteTask(id);
     refresh();
-    announce('Deleted "${task.title}".');
+    announce(`Deleted "${task.title}".`);
 
     const nextRow = taskRows.children[position] || taskRows.lastElementChild;
     const nextButton = nextRow ? nextRow.querySelector('button[data-action="delete"]') : null;
@@ -126,7 +126,7 @@ taskRows.addEventListener('submit', function (event) {
 });
 
 taskRows.addEventListener('keydown', function (event){
-    if (event.key === 'Escape' && editing  !== null) cancelEdit();
+    if (event.key === 'Escape' && editingId  !== null) cancelEdit();
 });
 
 searchInput.addEventListener('input', showTasks);
@@ -134,6 +134,8 @@ ignoreCase.addEventListener('change', showTasks);
 sortSelect.addEventListener('change', showTasks);
 
 document.getElementById('cap-form').addEventListener('submit', function (event){
+    event.preventDefault();
+    const input = document.getElementById('cap-input');
     if (input.value === '') {
         showError(input, '')
         setSetting('capMinutes', null)
@@ -169,7 +171,7 @@ function convert(from, to, multiplyBy, fromName, toName) {
         convertResult.textContent = 'Use a number like 90 or 1.5.';
     }else {
          to.value = Math.round(Number(from.value) * multiplyBy * 100) /100;
-         convertResult.textContent = '${from.value} ${fromName} = ${to.value} ${toName}';
+         convertResult.textContent = `${from.value} ${fromName} = ${to.value} ${toName}`;
     }
 }
 
@@ -191,9 +193,9 @@ function setImportStatus(html, isError) {
 function showImportProblems(problems) {
     let html = '<strong>Nothing was Imported.</strong> Fix these and try again:<ul>';
     problems.slice(0, 5).forEach(function (problem) {
-        html += '</li>' + escapeHTML(problem) + '</li>';
+        html += '<li>' + escapeHTML(problem) + '</li>';
     });
-    if (problems.length > 5) html += '</li>...and ${problems.length -5} more</li>';
+    if (problems.length > 5) html += `<li>...and ${problems.length -5} more</li>`;
     setImportStatus(html + '</ul>', true);
 }
 
@@ -210,7 +212,7 @@ exportLink.addEventListener('click', function (event) {
 });
 
 const importInput = document.getElementById('import-file');
-importInput.addEventlistener('change', function () {
+importInput.addEventListener('change', function () {
     const file = importInput.files[0];
     if (!file) return;
 
@@ -267,10 +269,9 @@ function loadSample(firstVisit) {
             return;
         }
 
-        refresh();
-
         editingId = null;
         replaceTasks(data);
+        refresh();
         if (firstVisit) announce(`Welcome! ${plural(data.length, 'sample task')} are loaded so you can look around.`);
         else announce(`Loaded ${plural(data.length, 'sample task')}.`);
     };
@@ -298,7 +299,7 @@ document.getElementById('delete-all').addEventListener('click', function () {
         announce('All tasks deleted.');
 });
 
-document.querySelector('input[name="unit"][value="${getSettings().unit}"]').checked = true;
+document.querySelector(`input[name="unit"][value="${getSettings().unit}"]`).checked = true;
 if (getSettings().capMinutes !== null) {
     document.getElementById('cap-input').value = Math.round((getSettings().capMinutes / 60) * 100) / 100;
 }

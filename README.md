@@ -71,6 +71,10 @@ index.html         the planner
 tests.html         runs the assertions in tests/tests.js
 scrape.html        stretch page: jQuery events scraper
 seed.json          16 sample tasks
+assets/
+  spec.md          M1 spec: data model, accessibility plan, breakpoints
+  desktop.svg      desktop wireframe
+  mobile.svg       mobile wireframe
 styles/style.css   all the styles, mobile first
 scripts/
   main.js          starts the app and connects the forms and buttons to the other modules
@@ -81,8 +85,6 @@ scripts/
   ui.js            draws the table, the dashboard, field errors and the status message
   scrape.js        the jQuery code for scrape.html
 tests/tests.js     the assertions
-  spec.md          M1 spec: data model, accessibility plan, breakpoints
-  wireframes/      mobile and desktop wireframes
 ```
 
 The planner itself doesn't use jQuery. The brief only allows it on an extra scraping page, so `scrape.html` is the only page that loads it.
@@ -92,7 +94,7 @@ The planner itself doesn't use jQuery. The brief only allows it on an extra scra
 ```json
 {
   "id": "task_0001",
-  "title": "Peer learning circle 16:00",
+  "title": "peer learning circle 16:00",
   "dueDate": "2026-10-12",
   "duration": 90,
   "tag": "Study",
@@ -135,7 +137,7 @@ The search box takes a JavaScript regular expression. It's compiled inside `try/
 |----------|---------------|
 | `@tag:study` | tasks tagged Study |
 | `@tag:group` | tags that start with "group", so it finds Group Project |
-| `\b\d{2}:\d{2}\b` | titles with a time in them, like 14:30 |
+| `\b\d{2}:\d{2}\b` | titles with a time in them, like 16:00 |
 | `^(lab\|lecture)` | titles or tags that start with Lab or Lecture |
 | `2026-10-\d{2}` | anything due in October 2026 |
 | `exam\|midterm` | either word |
@@ -232,10 +234,11 @@ Some things to try by hand in the app:
 - If it passes, the app asks before replacing your tasks. Extra fields in the file are dropped.
 - Saved data is checked when the app starts too. If localStorage holds broken JSON, the list starts empty instead of crashing, and any record that isn't a proper task is skipped.
 
+`seed.json` has 16 tasks picked to cover edge cases:
 - durations of 0, 5 and 1440 minutes, and decimals (52.5 and 120.25)
-- titles with `<`, `&`, quotes, accents and times like 08:30
-- a two-word tag (`Group Project`)
-- tasks that are overdue, due this week, and due months away
+- a title with `<` and `&` in it (`Read <Ch. 5> & take notes`), plus brackets, apostrophes, colons and times like 16:00 and 09:00
+- a two-word tag (`Group Project`), and `Study` next to `study` to show that tags are counted exactly as typed
+- tasks that are overdue, due this week, due next year (2027-01-01), and one dated 2026-02-29, a day that doesn't exist (see Known limitations)
 
 ## Stretch: jQuery events scraper
 
@@ -261,7 +264,7 @@ All the paths are relative (`styles/…`, `scripts/…`, `seed.json`), so it wor
 
 | Milestone | What went in |
 |-----------|--------------|
-| M1 | spec, data model, accessibility plan, wireframes  |
+| M1 | spec, data model, accessibility plan, wireframes (`assets/`) |
 | M2 | semantic HTML for every section, mobile-first CSS |
 | M3 | regex validation with inline errors, `tests.html` |
 | M4 | table and cards, sorting, regex search with `<mark>`, inline edit, delete |
@@ -272,7 +275,8 @@ All the paths are relative (`styles/…`, `scripts/…`, `seed.json`), so it wor
 ## Known limitations
 
 - Your tasks live in one browser on one device. Use Export and Import to move them.
-- The date rule checks the shape only, so a day that doesn't exist, like `2026-02-30`, still passes.
+- The date rule checks the shape only, so a day that doesn't exist, like `2026-02-29` (the "Freetime" task in `seed.json`), still passes.
+- Tags are counted exactly as typed, so `Study` and `study` count as two different tags on the dashboard.
 - The "has a letter" lookahead only counts A to Z, so a title written only in a non-Latin script is rejected.
 - The search runs whatever regex you type, so a very slow pattern could freeze the page for a moment. Titles are capped at 80 characters, which keeps this small.
 - The repeated-word rule would also catch a real name like "Bora Bora".

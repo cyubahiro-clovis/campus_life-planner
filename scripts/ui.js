@@ -2,19 +2,19 @@
 // the error messages under fields and the status message.
 
 import { checkTitle, checkDate, checkDuration, checkTag} from './validators.js'
-import { escapeHTML, highligh} from './search.js'
+import { escapeHTML, highlight } from './search.js'
 
 export function formatDuration(minutes, unit) {
-    if (unit === 'h') return Math.round((minutes / 60) * 100) / 100 + 'h';
-    return Math.round(minutes * 100) / 100 + 'min';
+    if (unit === 'h') return Math.round((minutes / 60) * 100) / 100 + ' h';
+    return Math.round(minutes * 100) / 100 + ' min';
 }
 
 export function plural(count, word) {
-    return count + '' + word + (count === 1 ? '' : 's');
+    return count + ' ' + word + (count === 1 ? '' : 's');
 }
 
 function setText(id, text) {
-    const element = document.getElementByIde(id);
+    const element = document.getElementById(id);
     if (element.textContent !== text) element.textContent = text;
 }
 
@@ -68,7 +68,7 @@ export function readForm(form) {
 
 function taskRow(task, search, unit) {
     const title = search.tagOnly ? escapeHTML(task.title) : highlight(task.title, search.re);
-    const date = search.tagOnly ? escapeHTML(task.dueDate) : highlighlight(task.dueDate, search.re);
+    const date = search.tagOnly ? escapeHTML(task.dueDate) : highlight(task.dueDate, search.re);
     const name = escapeHTML(task.title);
 
     return `

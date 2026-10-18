@@ -6,7 +6,7 @@ body {
     margin: 0;
     background: #f6f3ea;
     color:#1c2420;
-    font-family: system-ui, "Sergoe UI", Roboto, Arial, sans-serif;
+    font-family: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     line-height: 1.5;
 }
 
@@ -470,7 +470,7 @@ search {
     font-weight: 600;
 }
 
-.task-task {
+.task-table {
     width: 100%;
     border-collapse: collapse;
 }
@@ -509,7 +509,7 @@ search {
     padding-top: 0.5rem;
 }
 
-.task-table .actions.btn {
+.task-table .actions .btn {
     margin-right: 0.4rem;
 }
 
@@ -612,7 +612,7 @@ address {
 
 @keyframes grow {
     from {
-        tranform: scaleY(0);
+        transform: scaleY(0);
     }
 }
 

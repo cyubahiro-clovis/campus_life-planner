@@ -41,7 +41,7 @@ check('a title with a time passes', checkTitle('Study group 14:30'), fine);
 check('an empty title fails', checkTitle('') !== fine, true);
 check('a space at the start fails', checkTitle(' lab report ') !== fine, true);
 check('a space at the end fails', checkTitle(' lab report ') !== fine, true);
-check('two spaces in a row fail', checkTitle(' lab report ') !== fine, true);
+check('two spaces in a row fail', checkTitle('Lab  report') !== fine, true);
 check('lookahead: "1234" has no letter, so it fails', checkTitle('1234') !== fine, true);
 check('back-reference: "the the" fails', checkTitle('Read the the notes') !== fine, true);
 check('back-reference ignore case: "The the" fails', checkTitle('The the end') !== fine, true);
@@ -87,7 +87,7 @@ function idsOf(found) {
 }
 
 function searchFor(text, ignoreCase, keepId) {
-    filterTasks(tasks, buildSearch(text, ignoreCase, keepId));
+    return idsOf(filterTasks(tasks, buildSearch(text, ignoreCase, keepId)));
 }
 
 group('Regex search');
@@ -148,5 +148,5 @@ check('null in the list fails', validateImport([null]).length, 1);
 check('tricky text survives a JSON round trip', validateImport(JSON.parse(JSON.stringify([goodWith('title', 'Read <Ch. 5> & take "notes"')]))).length, 0);
 
 const summary = document.getElementById('summary');
-summary.textContent = failed === 0 ? 'All ${passed} tests passed.' : '${failed} of ${passed + failed} tests failed.';
+summary.textContent = failed === 0 ? `All ${passed} tests passed.` : `${failed} of ${passed + failed} tests failed.`;
 summary.className = failed === 0 ? 'pass' : 'fail';

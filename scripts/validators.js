@@ -21,7 +21,7 @@ export function checkTitle(value) {
     if (!rules.hasLetter.test(value)) return 'The title needs at least one letter.';
 
     const repeated = value.match(rules.repeatedWord);
-    if (repeated) return '"${repeated[1]}" is written twice in a row.';
+    if (repeated) return `"${repeated[1]}" is written twice in a row.`;
     return '';
 }
 
@@ -66,7 +66,7 @@ export function checkTask(task) {
         problems.push('duration must be a number of minutes, like 45');
     }
     if (typeof task.createdAt !== 'string' || typeof task.updatedAt !== 'string') {
-        problems.push('createedAt or updatedAt is missing');
+        problems.push('createdAt or updatedAt is missing');
     }
     return problems;
 }
@@ -80,11 +80,11 @@ export function validateImport(data) {
     data.forEach(function (task, index) {
         const problems = checkTask(task);
         if (problems.length === 0) {
-            if (ids.includes(task.id)) problems.push('the id "${task.id}" is used twice');
+            if (ids.includes(task.id)) problems.push(`the id "${task.id}" is used twice`);
             ids.push(task.id);
         }
         problems.forEach(function (problem) {
-            errors.push('Task ${index + 1}: ${problem}');
+            errors.push(`Task ${index + 1}: ${problem}`);
         });
     });
     return errors;

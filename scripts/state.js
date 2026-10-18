@@ -109,7 +109,7 @@ export function getStats() {
 
         let minutes = 0;
         tasks.forEach(function (task) {
-            if (task.duedate === date) minutes += task.duration;
+            if (task.dueDate === date) minutes += task.duration;
         });
         lastSevenDays.push({ date: date, minutes: minutes });
     }
