@@ -7,7 +7,7 @@ A planner for campus life. It keeps track of classes, labs, deadlines and club n
 - **Live site:** https://cyubahiro-clovis.github.io/campus_life-planner/
 - **Tests:** https://cyubahiro-clovis.github.io/campus_life-planner/tests.html
 - **jQuery scraper (stretch):** https://cyubahiro-clovis.github.io/campus_life-planner/scrape.html
-- **Demo video (unlisted):** https://www.youtube.com/watch?v=g9Hlpw8Ppz8
+- **Demo video (unlisted):** https://youtu.be/8lqCgqYeNVk
 
 ## Contents
 
