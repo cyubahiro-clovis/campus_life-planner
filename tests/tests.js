@@ -87,7 +87,7 @@ function idsOf(found) {
 }
 
 function searchFor(text, ignoreCase, keepId) {
-    return idsOf(filterTasks(tasks, buildSearch(text, ignoreCase, keepId)));
+    return idsOf(filterTasks(tasks, buildSearch(text, ignoreCase), keepId));
 }
 
 group('Regex search');

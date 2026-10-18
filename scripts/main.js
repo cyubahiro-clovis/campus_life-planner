@@ -58,7 +58,7 @@ taskForm.addEventListener('submit', function (event) {
 });
 
 function focusRowButton(id, action) {
-    const button = taskRows.querySelector(`tr[data-id="${id}"]} button[data-action="${action}"]`);
+    const button = taskRows.querySelector(`tr[data-id="${id}"] button[data-action="${action}"]`);
     if (button) button.focus();
 }
 
@@ -140,7 +140,7 @@ document.getElementById('cap-form').addEventListener('submit', function (event){
         showError(input, '')
         setSetting('capMinutes', null)
     } else if (!rules.duration.test(input.value) || Number(input.value) === 0) {
-        showError(input, 'Enter a number of hours bigger than 0, like 40 or 12.5');
+        showError(input, 'Enter a number of hours bigger than 0, like 40 or 12.5.');
         input.focus();
         return;
     } else {
