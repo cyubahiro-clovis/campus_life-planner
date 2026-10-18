@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="'UTF-8">
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <meta name="description" content=" A campus Life Planner: tasks, deadlines and events with regex.Everything stays in your browser.">
+        <title>Campus Lifa Planner</title>
+        <link rel="stylesheet" href="styles/style.css">
+        <script type="module" src="scripts/main.js"></script>
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to main content</a>
+
+
+        <header class="site-header">
+            <hgroup>
+                <h1>Campus Life Planner</h1>
+                <p>Class, deadlines and club nights in one place.</p>
+            </hgroup>
+            <nav aria-label="Main">
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#task">Tasks</a></li>
+                    <li><a href="#setting">Settings</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main" tabindex="-1">
+
+            <section class="panel" id="dashboard" aria-labelledby="dashboard-heading">
+                <h2 id="dashboard-heading">Dashboard</h2>
+
+                <div class="stats">
+                    <div class="stat">
+                        <h3>Total tasks</h3>
+                        <p class="stat-value" id="stat-count">0</p>
+                    </div>
+                    <div class="stat">
+                        <h3>Total time</h3>
+                        <p class="stat-value" id="stat-time">0 min</p>
+                    </div>
+                    <div class="stat">
+                        <h3>Top tag</h3>
+                        <p class="stat-value" id="stat-tag">None yet</p>
+                        <p class="stat-note" id="stat-tag-note">add a task to see one</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-row">
+                    <div class="card chart-card">
+                        <h3>Last 7 days</h3>
+                        <p class="notes" id="chart-summary">Nothing was due in the last 7 days.</p>
+                        <div class7="chart" id="chart" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="card cap-card" id="cap-card">
+                        <h3>Time cap</h3>
+                        <p class="note">Set a limit for the total time of all your tasks. Leave the box empty to remove it.</p>
+                        <form id="cap-form" novalidate>
+                            <label for="cap-input">Cap in hours</label>
+                            <div class="inline">
+                                <input id="cap-input" type="text" inputmode="decimal" maxlength="7" autocomplete="off" placeholder=" " aria-describedby="cap-input-error">
+                                <button type="submit" class="btn primary">Set cap</button>
+                            </div>
+                            <p class="error" id="cap-input-error" aria-live="polite"></p>
+                        </form>
+                        <div class="meter"><div class="meter-bar" id="cap-bar"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="tasks" aria-labelledby="tasks-heading">
+                <h2 id="tasks-heading">Tasks</h2>
+
+                <div class="toolbar">
+                    <search>
+                        <label for="search">Search with a regex</label>
+                        <input id="search" type="search" maxlength="100" spellcheck="false" autocomplete="off"
+                               placeholder=" " aria-describedby="search-hint search-status">
+                        <label class="check" for="ignore-case"><input type="checkbox" id="ignore-case" checked>Ignore case</label>
+                    </search>
+                    <div class="field sort-box">
+                        <label for="sort">Sort by</label>
+                        <select id="sort">
+                            <option value="date-asc">Due date, soonest first</option>
+                            <option value="date-desc">Due date, latest first</option>
+                            <option value="title-asc">Title, A to Z</option>
+                            <option value="title-desc">Title, Z to A</option>
+                            <option value="duration-asc">Duration, shortest first</option>
+                            <option value="duration-desc">Duration, longest first</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="hint" id="search-hint">Try</p>
+                <p class="search-status" id="search-status" role="status"></p>
+
+                <table class="task-table" id="task-table">
+                    <caption class="visually-hidden">Your tasks</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Due date</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Tag</th>
+                            <th scope="col"><span class="visually-hidden">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="task-rows"></tbody>
+                </table>
+                <p class="empty" id="empty-message" hidden></p>
+            </section>
+            <section class="panel" id="add-task" aria-labelledby="add-heading">
+                <h2 id="add-heading">Add a task</h2>
+                <p class="note">All fields are needed. To change a task later, use Edit on its row.</p>
+
+                <form id="task-form" class="task-form" novalidate>
+                    <div class="field">
+                        <label for="title">Title</label>
+                        <input id="title" name="title" type="text" maxlength="80" autocomplete="off" required aria-descriedby="title-hint title-error">
+                        <p class="hint" id="title-hint">For example: CHEM lab report 14:30</p>
+                        <p class="errors" id="title-error" aria-live="polite"></p>
+                    </div>
+                    <div class="field">
+                        <label for="due-date">Due date</label>
+                        <input id="due-date" name="dueDate" type="text" maxlength="10" placeholder=" " autocomplete="off" required aria-describedby="due-date-hint due-date-error">
+                        <p class="hint" id="due-date-hint">Year-month-day, like 2026-10-20.</p>
+                        <p class="error" id="due-date-error" aria-live="polite"></p>
+                    </div>
+                    <div class="field">
+                        <label for="duration">Duration (minutes)</label>
+                        <input id="duration" name="duration" type="text" inputmode="decimal" maxlength="8" autocomplete="off" required aria-describedby="duration-hint duration-error">
+                        <p class="hint" id="duration-hint">A number like 45 or 52.5</p>
+                        <p class="error" id="duration-error" aria-live="polite"></p>
+                    </div>
+                    <div class="field">
+                        <label for="tag">Tag</label>
+                        <input id="tsg" name="tag" type="text" maxlength="30" autocomplete="off" required ari-describedby="tag-hint tag-error">
+                        <p class="hint" id="tag-hint">Letters, spaces or hyphens: Study, Club, Self-care.</p>
+                        <p class="error" id="tag-error" aria-live="polite"></p>
+                    </div>
+                    <div class="button form-buttons">
+                        <button type="submit" class="btn primary">Add task</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="panel" id="settings" aria-labelledby="settings-heading">
+                <h2 id="settings-heading">Settings</h2>
+
+                <div class="settings-row">
+                    <div class="cards">
+                        <h3>Units</h3>
+                        <fieldset>
+                            <legend>Show durations in</legend>
+                            <label class="check"><input type="radio" name="unit" value="min" checked> MInutes (90 min)</label>
+                            <label class="check"><input type="radio" name="unit" value="h"> Hours (1.5 h)</label>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Minutes and hours converter</legend>
+                            <div class="inline">
+                                <div class="field">
+                                    <label for="convert-minutes">Minutes</label>
+                                    <input id="convert-minutes" type="text" inputmode="decimal" maxlength="8" autocomplete="off">
+                                </div>
+                                <div class="field">
+                                    <label for="convert-hours">Hours</label>
+                                    <input id="convert-hours" type="text" inputmode="decimal" maxlength="8" autocomplete="off">
+                                </div>
+                            </div>
+                            <p class="hint" id="convert-result" aria-live="polite">Type a number in either box.</p>
+                        </fieldset>
+                    </div>
+
+                    <div class="card">
+                        <h3>Your data</h3>
+                        <p class="note">Tasks save automatically in this browser.Export a backup beforeyou clear your browser data.</p>
+                        <div class="buttons">
+                            <a class="btn" id="export" href="#" download="campus-planner-tasks.json">Export JSON</a>
+                            <button type="button" class="btn" id="load-sample">Load sample tasks</button>
+                        </div>
+                        <div class="field">
+                            <label for="import-file">Import a JSON file (it replaces your tasks)</label>
+                            <input id="import-file" type="file" accept=".json,application/json">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="panel" id="about" aria-labelledby="about-heading">
+                <h2 id="about-heading">About</h2>
+
+                <div class="about-row">
+                    <article>
+                        <h3>Why I made this</h3>
+                        <p>My week was split between a calendar app, group chats and sticky notes. I wanted one place that shows what's due, how much time I've signed up for, and when I'm taking on too much.</p>
+                        <p>It's plain HTML, CSS, and Javascript with no frameworks. Your tasks are saved in this browser with localStorage, so there's no account and nothingis sentanywhere.</p>
+                    </article>
+
+                    <div class="cards>">
+                        <h3>Contact</h3>
+                        <address>
+                          <ul class="plain-list">
+                            <li>Github: <a href="https://github.com/cyubahiro-clovis">My github</a></li>
+                            <li>Email: <a href="mailto:m.clovis@alustudent.com>My email"></a></li>
+                          </ul>
+                        </address>
+                    </div>
+                    <div class="card">
+                        <h3>Keyboard</h3>
+                        <ul class="plain-list">
+                            <li><kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> move between links, fields and buttons</li>
+                            <li><kbd>Enter</kbd> adds a task, saves an edit or presses a button</li>
+                            <li><kbd>Esc</kbd> cancels an edit</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 Cyubahiro Clovis</p>
+            <p><a href="tests.html">Run the tests</a> . <a href="scrape.html">jQuery events scrapers</a> . <a href="https://github.com/cyubahiro-clovis/campus_life-planner">Source on Github</a></p>
+        </footer>
+
+        <div class="status" id="status" role="status"></div>
+    </body>
+</html>
